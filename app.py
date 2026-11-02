@@ -236,14 +236,14 @@ def main() -> None:
             mime="text/plain; charset=utf-8",
         )
 
-        st.markdown("#### Listen to translation")
+        st.markdown("#### Convert translation to voice and play")
         if st.session_state.get("target_language", "").startswith("Bhojpuri"):
             st.info("Bhojpuri uses a Hindi neural voice fallback for speech. The translation text remains Bhojpuri.")
         voice_names = ("Female voice", "Male voice")
         voice_choice = st.selectbox("Voice", voice_names)
         voice_id = VOICES.get(st.session_state.get("target_language", target_language), VOICES["English"])[0 if voice_choice == voice_names[0] else 1]
-        rate = st.slider("Speaking speed", -25, 25, 0, step=5, format="%d%%")
-        if st.button("🔊 Generate speech", use_container_width=True):
+        rate = st.slider("Speaking speed", -25, 25, 0, step=5, format="%d%%", help="Negative values make speech slower; positive values make it faster.")
+        if st.button("▶️ Generate voice and play", use_container_width=True):
             try:
                 with st.spinner("Generating spoken audio..."):
                     st.session_state.audio = make_speech(translated, voice_id, rate)
@@ -251,7 +251,7 @@ def main() -> None:
                 st.session_state.audio = None
                 st.error(f"Could not generate audio: {exc}")
         if st.session_state.get("audio"):
-            st.audio(st.session_state.audio, format="audio/mp3")
+            st.audio(st.session_state.audio, format="audio/mp3", autoplay=True, alt="Translated speech audio. Use the player controls to pause or replay.")
             st.download_button(
                 "⬇️ Download speech (.mp3)",
                 data=st.session_state.audio,
