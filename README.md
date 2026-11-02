@@ -15,7 +15,7 @@ A Streamlit-only multilingual translator. Translation requests are sent server-s
 3. Create `.streamlit/secrets.toml` with:
 
 ```toml
-OPENROUTER_API_KEY = "your_openrouter_api_key"
+OPENROUTER_API_KEY = "your_actual_api_key"
 OPENROUTER_MODEL = "nvidia/nemotron-3-ultra-550b-a55b:free"
 ```
 
@@ -24,10 +24,16 @@ OPENROUTER_MODEL = "nvidia/nemotron-3-ultra-550b-a55b:free"
 ## Deploy on Streamlit Community Cloud
 1. Open https://share.streamlit.io and sign in with GitHub.
 2. Create an app using this repository, branch `main`, and main file `app.py`.
-3. In Advanced settings > Secrets, add the two TOML values shown above.
+3. In **Advanced settings → Secrets**, paste both settings below, replacing the API key placeholder with your actual key:
+
+```toml
+OPENROUTER_API_KEY = "your_actual_api_key"
+OPENROUTER_MODEL = "nvidia/nemotron-3-ultra-550b-a55b:free"
+```
+
 4. Deploy.
 
-Never commit API keys, `.env` files, or `.streamlit/secrets.toml`. OpenRouter free models may be rate-limited or unavailable; change OPENROUTER_MODEL in Streamlit Secrets when needed.
+Never commit a real API key, `.env` files, or `.streamlit/secrets.toml`. OpenRouter free models may be rate-limited or unavailable; change OPENROUTER_MODEL in Streamlit Secrets when needed.
 
 Note: Bhojpuri uses a Hindi neural voice fallback for audio; it is not a dedicated Bhojpuri voice.
 
